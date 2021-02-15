@@ -164,8 +164,8 @@ def export_PhotonsScan(input_path, channel = 'all', frame = 0):
                     frame = i
                     savePhotons(scan,channel,frame,name,folder,x_max,y_max)
         else:
-            frame = frame-1 #because frames start at 1 but indexes start as 0
             assert 0 < frame <= scan.num_frames, f'Sorry, frame range goes from 1 to {scan.num_frames}.'
+            frame = frame-1 #because frames start at 1 but indexes start as 0
             for channel in channels:
                 savePhotons(scan,channel,frame,name,folder,x_max,y_max)
     else:
@@ -208,13 +208,24 @@ def add_button_savePDF(fig, folder, outname):
     button.on_click(on_button_clicked)
 
 def add_button_saveTIFF(kymo, folder, outname):
-    '''Button to save the image as TIFF '''
+
     outpath = os.path.join(folder,f'{outname}.tiff')
     button = widgets.Button(description = 'Save TIFF')
     output = widgets.Output()
     display(button, output)
     def on_button_clicked(b):
         kymo.save_tiff(outpath)
+        with output: print('Done.')
+    button.on_click(on_button_clicked)
+
+def add_button_saveTIFF(kymo_or_scan, folder, outname):
+    '''Button to save the image as TIFF '''
+    outpath = os.path.join(folder,f'{outname}.tiff')
+    button = widgets.Button(description = 'Save TIFF')
+    output = widgets.Output()
+    display(button, output)
+    def on_button_clicked(b):
+        kymo_or_scan.save_tiff(outpath)
         with output: print('Done.')
     button.on_click(on_button_clicked)
 
@@ -397,6 +408,8 @@ def plot_Scan(input_path, figsize = (9,5), channel = 'green', threshold = None, 
         axs[1].set_xlabel('Time (s)', fontsize = label_fontsize)
         axs[1].set(xlim=(0,force_dataset[0].max()), ylim=(None,None))
         axs[1].tick_params(direction = 'in', top = True, right = True)
+
+    add_button_saveTIFF(scan, folder, f'{name}_RGB')
 
     def update_frame(frame):
         if title == True: fig.suptitle(f'{name}_{channel}_frame{frame}')
