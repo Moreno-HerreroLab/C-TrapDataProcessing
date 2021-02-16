@@ -117,6 +117,7 @@ def export_PhotonsKymo(input_path, channel = 'all'):
         x_max = duration; y_max = length; z_max = int(kymo_channel.max());
         np.savetxt(outpath, kymo_channel,  fmt='%d', delimiter='\t', newline='\n', comments='',
                    header = f'Kymograph {channel}-channel ASCII Matrix file \nX Amplitude: {x_max} s \nY Amplitude: {y_max} µm \nZ Amplitude: {z_max} a.u.')
+        print('Done!')
 
     if channel == 'all':
         channels = ['red','green','blue']
@@ -381,7 +382,7 @@ def plot_Scan(input_path, figsize = (9,5), channel = 'green', threshold = None, 
     misspelled_channel(scan,channel)
     scan_channel = getattr(scan, f'{channel}_image')
 
-    if threshold == None: threshold = kymo_channel.max()
+    if threshold == None: threshold = scan_channel.max()
 
     c_color = relate_ChannelColor(channel)
     c = mcolors.ColorConverter().to_rgb
