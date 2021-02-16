@@ -1,3 +1,3 @@
 # C-Trap® Data Processing
 
-'''working on it'''
+Este read-me corresponde al paper de Balaguer et al. 2021
