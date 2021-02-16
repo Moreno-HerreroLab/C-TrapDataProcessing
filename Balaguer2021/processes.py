@@ -117,7 +117,7 @@ def export_PhotonsKymo(input_path, channel = 'all'):
         x_max = duration; y_max = length; z_max = int(kymo_channel.max());
         np.savetxt(outpath, kymo_channel,  fmt='%d', delimiter='\t', newline='\n', comments='',
                    header = f'Kymograph {channel}-channel ASCII Matrix file \nX Amplitude: {x_max} s \nY Amplitude: {y_max} µm \nZ Amplitude: {z_max} a.u.')
-        print('Done!')
+        print(f'channel = {channel}, done!')
 
     if channel == 'all':
         channels = ['red','green','blue']
@@ -157,6 +157,8 @@ def export_PhotonsScan(input_path, channel = 'all', frame = 0):
         z_max = int(scan_channel.max());
         np.savetxt(outpath, scan_channel[frame,:,:], fmt='%d', delimiter='\t', newline='\n', comments='',
                                                     header = csvheader(channel,frame,x_max,y_max,z_max))
+        print(f'channel = {channel}, done!')
+
     if channel == 'all':
         channels = ['red','green','blue']
         if frame == 'all':
