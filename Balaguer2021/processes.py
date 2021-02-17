@@ -27,7 +27,7 @@ def relate_ChannelColor(channel):
 def make_colormap(seq):
     ''' Returns a LinearSegmentedColormap
     seq: a sequence of floats and RGB-tuples.
-    The floats should be in increasing order and within the interval (0,1).'''
+    '''
     seq = [(None,) * 3, 0.0] + list(seq) + [1.0, (None,) * 3]
     cdict = {'red': [], 'green': [], 'blue': []}
     for i, item in enumerate(seq):
